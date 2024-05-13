@@ -8,6 +8,8 @@ import { deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import api from '@/api/apiApp';
 import { DiVim } from 'react-icons/di';
+import { FaRegPaste } from "react-icons/fa6";
+
 
 
 
@@ -17,6 +19,7 @@ const Navbar: React.FC = () => {
   const [email, setEmail] = useState<string | any>("");
   const [referralCode, setreferralCode] = useState<string | any>([]);
   const [accessToken, setAccessToken] = useState<string | any>("");
+  const role = getCookie('role')
 
   const getRefferalCode = async ()=> {
     try {
@@ -28,6 +31,19 @@ const Navbar: React.FC = () => {
       
     }
   }
+
+  const [copySuccess, setCopySuccess] = useState(false);
+
+  const handleCopy = (referralCode: string) => {
+    navigator.clipboard.writeText(referralCode)
+      .then(() => {
+        setCopySuccess(true);
+        setTimeout(() => {
+          setCopySuccess(false);
+        }, 1000); // Tulisan "Copied!" akan hilang setelah 3 detik
+      })
+      .catch(err => console.error('Failed to copy:', err));
+  };
 
   useEffect(() => {
     getRefferalCode()
@@ -55,7 +71,7 @@ const Navbar: React.FC = () => {
     deleteCookie('access_token');
     deleteCookie('id_user');
     deleteCookie('email');
-    // deleteCookie('referralCode');
+    deleteCookie('role');
     router.push("/login")
   }
   return (
@@ -74,7 +90,7 @@ const Navbar: React.FC = () => {
         <div className="flex-grow text-center hidden md:block">
           <Link href="/" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</Link>
           <Link href="/event" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Event</Link>
-          {accessToken &&
+          {accessToken && role === '2' &&
             <Link href="/createEvent" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Create Event</Link>
           }
           {accessToken &&
@@ -97,15 +113,21 @@ const Navbar: React.FC = () => {
 
 
           {accessToken &&
-            <button className='ml-3 text-blue-700 hover:text-white border border-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800'
+            <button className='ml-3 text-white-700 hover:text-white border border-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800'
               onClick={() => handleLogOut()}>logout</button>
           }
 
-          {
-            referralCode.map((item:any, index:number) =>
-            <div key={index} className='text-black'> {item.referralCode} </div>
-          )
-          }
+{referralCode.map((item: any, index: number) => (
+        <div key={index} className='flex items-center'>
+          <button className=' ml-3 hover:text-white border border-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800' onClick={() => handleCopy(item.referralCode)}> 
+            <div className="flex items-center">
+              <FaRegPaste className="text-white" />
+              <span className="ml-1">Referral Code</span>
+            </div>
+          </button>
+        </div>
+      ))}
+      {copySuccess && <span className="text-green-500 ml-2">Copied!</span>}
 
 
           <div className="flex md:hidden">

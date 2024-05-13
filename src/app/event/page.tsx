@@ -8,12 +8,26 @@ import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import api from '@/api/apiApp';
+import moment from 'moment';
+import { useDebouncedCallback } from 'use-debounce';
+import { toast } from 'react-toastify';
+
 
 const Event: React.FC = () => {
+    const role = getCookie('role')
     const router = useRouter()
 
     const [data, setData] = useState<any>([]);
     const [search, setSearch] = useState<any>("");
+
+    const debounced = useDebouncedCallback(
+        // function
+        (value) => {
+            setSearch(value);
+        },
+        // delay in ms
+        2000
+    );
 
     const getEvent = async () => {
         try {
@@ -26,6 +40,18 @@ const Event: React.FC = () => {
 
     }
 
+    const handleDelete = async (id: string) => {
+        try {
+            await api.delete(`/event/${id}`)
+            getEvent()
+
+        } catch (error) {
+            console.log(error)
+           toast.error("ui")
+        }
+
+    }
+
     useEffect(() => {
         getEvent()
         const accessTokenCookie = getCookie('access_token')
@@ -34,7 +60,7 @@ const Event: React.FC = () => {
         }
     }, [search])
 
-    
+
 
     console.log(data)
     return (
@@ -54,16 +80,16 @@ const Event: React.FC = () => {
                             {/* <li>
                                 <button type="button" className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mockups</button>
                             </li> */}
-            
+
                         </ul>
                     </div>
                     <div className="relative w-full">
-                        <input 
-                        type="search" 
-                        id="search-dropdown" 
-                        onChange={(e)=> setSearch(e.target.value)}
-                        className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border-s-gray-50 border-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search Event" required />
-                       
+                        <input
+                            type="search"
+                            id="search-dropdown"
+                            onChange={(e) => debounced(e.target.value)}
+                            className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border-s-gray-50 border-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search Event" required />
+
                     </div>
                 </div>
             </form>
@@ -72,7 +98,7 @@ const Event: React.FC = () => {
             <div className="flex justify-center items-center px-6">
                 <article className="grid grid-cols-3 my-10  gap-8">
                     {
-                        data.map((item: any, index: number) =>
+                        data?.map((item: any, index: number) =>
                             <div key={index} className="rounded-xl bg-white p-6 ring ring-indigo-50 sm:p-6 lg:p-8">
                                 <div className="flex items-start sm:gap-8 border-gray-300">
                                     <div className="hidden sm:grid sm:size-20 sm:shrink-0 sm:place-content-center sm:rounded-full sm:border-2 sm:border-indigo-500" aria-hidden="true">
@@ -95,7 +121,7 @@ const Event: React.FC = () => {
 
                                         <h3 className="mt-4 text-lg font-medium sm:text-xl"><a href="#" className="hover:underline">{item.name}</a></h3>
 
-                                        <p className="mt-1 text-sm text-gray-700">{item.dateStart}</p>
+                                        <p className="mt-1 text-sm text-gray-700">{moment(item.dateStart).format("DD-MMM-YYYY")}</p>
                                         <p className="mt-1 text-sm text-gray-700">{item.dateEnd}</p>
 
 
@@ -110,6 +136,14 @@ const Event: React.FC = () => {
                                             <p className="mt-2 text-xs font-medium text-gray-500 sm:mt-0">{item.categoryName} &middot;</p>
                                             <p className="mt-2 text-xs font-medium text-gray-500 sm:mt-0">{item.location}</p>
                                         </div>
+
+                                        
+                                        {role === '2' &&
+                                            <button onClick={() =>
+                                                handleDelete(item.id)
+                                            }>delete</button>
+                                        }
+
                                     </div>
                                 </div>
                             </div>

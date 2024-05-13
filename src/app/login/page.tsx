@@ -36,6 +36,7 @@ const router = useRouter()
         setCookie('access_token', result?.data?.newData?.token);
         setCookie('id_user', result?.data?.newData?.userId);
         setCookie('email', result?.data?.newData?.email);
+        setCookie('role', result?.data?.newData?.role);
             router.push('/event')
             toast.success(result?.data?.message)
         console.log(result.data.newData);
