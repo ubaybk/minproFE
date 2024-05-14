@@ -6,6 +6,8 @@ import Navbar from '../navbar/page';
 import { useRouter } from 'next/navigation';
 import api from '@/api/apiApp';
 import { ToastContainer, toast } from 'react-toastify';
+import { useEffect } from 'react';
+import { getCookie } from 'cookies-next';
 
 interface FormValues {
     // Tambahkan properti yang diperlukan di sini
@@ -60,6 +62,15 @@ const CreateEvent: React.FC = () => {
         }
 
     };
+
+
+    useEffect(() => {
+        
+        const accessTokenCookie = getCookie('access_token')
+        if (!accessTokenCookie) {
+          router.push("/login")
+        }
+      }, [])
 
 
     return (

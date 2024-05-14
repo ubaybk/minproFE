@@ -47,7 +47,7 @@ const Event: React.FC = () => {
 
         } catch (error) {
             console.log(error)
-           toast.error("ui")
+            toast.error("ui")
         }
 
     }
@@ -65,7 +65,7 @@ const Event: React.FC = () => {
     console.log(data)
     return (
 
-        <div>
+        <div className='flex flex-col bg-white min-h-screen'>
             <Navbar />
 
             {/* Search */}
@@ -88,7 +88,7 @@ const Event: React.FC = () => {
                             type="search"
                             id="search-dropdown"
                             onChange={(e) => debounced(e.target.value)}
-                            className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border-s-gray-50 border-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search Event" required />
+                            className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border-lgray-50 border-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search Event" required />
 
                     </div>
                 </div>
@@ -114,7 +114,7 @@ const Event: React.FC = () => {
                                     <div>
                                         <Link href={`/event/${item.id}`}>
 
-                                            <strong className="rounded border border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white">Detail</strong>
+                                            <strong className="rounded border border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[15px] font-medium text-white">Detail</strong>
 
                                         </Link>
 
@@ -122,7 +122,7 @@ const Event: React.FC = () => {
                                         <h3 className="mt-4 text-lg font-medium sm:text-xl"><a href="#" className="hover:underline">{item.name}</a></h3>
 
                                         <p className="mt-1 text-sm text-gray-700">{moment(item.dateStart).format("DD-MMM-YYYY")}</p>
-                                        <p className="mt-1 text-sm text-gray-700">{item.dateEnd}</p>
+                                        <p className="mt-1 text-sm text-gray-700">{moment(item.dateEnd).format("DD-MMM-YYYY")}</p>
 
 
                                         <div className="mt-4 sm:flex sm:items-center sm:gap-2">
@@ -137,9 +137,9 @@ const Event: React.FC = () => {
                                             <p className="mt-2 text-xs font-medium text-gray-500 sm:mt-0">{item.location}</p>
                                         </div>
 
-                                        
+
                                         {role === '2' &&
-                                            <button onClick={() =>
+                                            <button className='bg-red-500 rounded-lg px-2 text-white' onClick={() =>
                                                 handleDelete(item.id)
                                             }>delete</button>
                                         }
@@ -149,60 +149,12 @@ const Event: React.FC = () => {
                             </div>
                         )
                     }
-
-
-
-
-
-
-
                 </article>
 
             </div>
-
-            {/* pagination */}
-            <div className="inline-flex justify-center mx-auto gap-1">
-                <a
-                    href="#"
-                    className="inline-flex items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
-                >
-                    <span className="sr-only">Prev Page</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                        <path
-                            fillRule="evenodd"
-                            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                            clipRule="evenodd"
-                        />
-                    </svg>
-                </a>
-
-                <div>
-                    <label htmlFor="PaginationPage" className="sr-only">Page</label>
-
-                    <input
-                        type="number"
-                        className="h-8 w-12 rounded border border-gray-100 bg-white p-0 text-center text-xs font-medium text-gray-900 [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
-                        min={1}
-                        defaultValue={2}
-                        id="PaginationPage"
-                    />
-                </div>
-
-                <a
-                    href="#"
-                    className="inline-flex items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
-                >
-                    <span className="sr-only">Next Page</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                        <path
-                            fillRule="evenodd"
-                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                            clipRule="evenodd"
-                        />
-                    </svg>
-                </a>
-            </div>
-            <Footer />
+            
+            <div className='mt-auto'> <Footer /></div>
+            
         </div>
     );
 };

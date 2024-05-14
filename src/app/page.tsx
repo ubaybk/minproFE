@@ -8,10 +8,10 @@ import RegisterForm from "./register/page";
 
 export default function Home() {
   return (
-    <div> 
+    <div className='flex flex-col bg-white min-h-screen' > 
       <Navbar />
       <LandingPage />
-      <Footer />
+      <div className='md:mt-[110px]'> <Footer /></div>
       
       {/* <RandomUser />   */}
     </div>

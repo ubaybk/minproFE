@@ -88,13 +88,13 @@ const Navbar: React.FC = () => {
           <Link href="/" className="text-white text-lg font-semibold ml-2">Eventopia</Link>
         </div>
         <div className="flex-grow text-center hidden md:block">
-          <Link href="/" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</Link>
-          <Link href="/event" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Event</Link>
+          <Link href="/" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Home</Link>
+          <Link href="/event" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Event</Link>
           {accessToken && role === '2' &&
-            <Link href="/createEvent" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Create Event</Link>
+            <Link href="/createEvent" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Create Event</Link>
           }
           {accessToken &&
-            <Link href="/transaction" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Transaction History</Link>
+            <Link href="/transaction" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Transaction History</Link>
           }
           {/* <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Services</a>
           <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a> */}

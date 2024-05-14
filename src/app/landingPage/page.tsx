@@ -2,22 +2,15 @@ import React from 'react';
 
 const LandingPage: React.FC = () => {
   return (
-    <div className="bg-gray-100">
-      {/* Header */}
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">Welcome to Our Website</h1>
-        </div>
-      </header>
-
+    <div className="bg-gray-100 mt-28 h-screen">
       {/* Hero Section */}
       <section className="bg-gray-900 text-gray-100 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 p-4 text-white text-center rounded-xl">
           <div className="text-center">
-            <h2 className="text-4xl font-bold tracking-tight">Welcome to Eventopia!</h2>
+            <h2 className="text-4xl font-bold tracking-tight">Welcome to Eventopia! </h2>
             <p className="mt-4 text-lg">A home for all kinds of joy! Whether you're a music lover, a health enthusiast, or an automotive aficionado, we have something for everyone. Join us on a journey through a series of inspiring and entertaining events. Don't miss out on unforgettable moments and discover what makes your heart race at Eventopia! Visit our website now and register to join the next adventure!</p>
             <div className="mt-6">
-              <a href="#" className="inline-block bg-white py-3 px-6 text-gray-900 font-semibold rounded-lg shadow-md hover:bg-gray-100">Get Started</a>
+              <a href="/event" className="inline-block bg-white py-3 px-6 text-gray-900 font-semibold rounded-lg shadow-md hover:bg-gray-100">Get Started</a>
             </div>
           </div>
         </div>
